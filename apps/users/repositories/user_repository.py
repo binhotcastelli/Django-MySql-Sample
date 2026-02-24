@@ -1,10 +1,31 @@
-from core.repositories.base_repository import BaseRepository
 from apps.users.models.user import User
 
-class UserRepository(BaseRepository):
+class UserRepository:
 
-    def __init__(self):
-        super().__init__(User)
+    @staticmethod
+    def get_all():
+        return User.objects.filter(is_active=True)
 
-    def get_by_email(self, email):
-        return self.model.objects.filter(email=email).first()
+    @staticmethod
+    def get_by_id(user_id):
+        return User.objects.filter(id=user_id, is_active=True).first()
+
+    @staticmethod
+    def get_by_email(email):
+        return User.objects.filter(email=email, is_active=True).first()
+
+    @staticmethod
+    def create(**data):
+        return User.objects.create(**data)
+
+    @staticmethod
+    def update(user, **data):
+        for field, value in data.items():
+            setattr(user, field, value)
+        user.save()
+        return user
+
+    @staticmethod
+    def delete(user):
+        user.is_active = False
+        user.save()
