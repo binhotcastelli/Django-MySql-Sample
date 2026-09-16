@@ -1,0 +1,8 @@
+.env
+certificates/
+!certificates/.gitkeep
+usr_images
+__pycache__/
+*.pyc
+*.pyo
+/.vscode/settings.json
